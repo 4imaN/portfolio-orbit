@@ -1,38 +1,48 @@
 # Portfolio Orbit
 
-Aiman Mengesha’s personal portfolio: an interactive Three.js solar system, a browsable project index, and a responsive editorial layout.
+Aiman Mengesha’s interactive portfolio, built with **Next.js App Router, React, strict TypeScript, Three.js, and Motion**.
 
-## Run
+Each planet represents a real project. Rotate the system, select a planet to approach it, and explore its details. The conventional project index remains available without WebGL.
 
-Requires Node.js 20.19+ and npm.
+## Run locally
+
+Node.js 20.19+ and npm:
 
 ```sh
 npm ci
 npm run dev
 ```
 
+Open http://127.0.0.1:4174. The original `/portfolio-orbit.html` URL also works.
+
 ```sh
+npm run typecheck
 npm run build
-npm run preview
+npm start
 ```
 
-Both `/` and `/portfolio-orbit.html` serve the portfolio. Deploy the generated `dist/` directory to a static host. GitHub repository publication does not automatically deploy the website.
+`npm start` serves the production build on port 4174. Stop an existing preview before using that port. Deploy this as a Next.js application; the old Vite `dist/` directory is no longer the build output.
 
-## Edit
+## Structure
 
-- `src/projects.js`: project descriptions, repository links, colors, and orbit settings.
-- `src/orbit.js`: procedural Three.js geometry, lighting, interaction, and animation.
-- `src/style.css`: layout, typography, responsive design, and motion preferences.
-- `index.html`: biography, navigation, and contact details.
+- `app/`: App Router entry, metadata, and responsive CSS.
+- `components/Portfolio.tsx`: page content, transitions, and accessible native project dialogs.
+- `components/Orbit.tsx`: lazy-loaded React wrapper and scene lifecycle.
+- `lib/orbit-engine.ts`: typed Three.js scene, procedural planet textures, atmosphere shaders, camera travel, hover feedback, and rendering lifecycle.
+- `lib/projects.ts`: project content, colors, repository links, and orbit settings.
 
-The production build copies the main entry to `portfolio-orbit.html`. Edit only `index.html`.
+## Motion and interaction
 
-## Accessibility and resilience
+- Staged hero entrance and scroll-triggered section reveals.
+- Textured, rotating planets with atmosphere rims and orbital trails.
+- Hover/focus highlights; orbit selection approaches the chosen world.
+- Detail navigation switches projects; Escape closes and returns to the previous camera view.
+- Pause and reset controls, native mobile page scrolling, two-finger scene rotation.
+- Reduced motion bypasses camera interpolation and disables automatic orbit motion.
+- Rendering pauses offscreen and in hidden tabs. All resources, observers, and listeners are disposed on unmount.
 
-The project list works independently of WebGL. Native dialogs support keyboard focus management and Escape. Animation respects reduced-motion preferences and can be paused. Rendering suspends when the scene is offscreen or the tab is hidden. Fonts load from Fontshare with local fallbacks; JavaScript dependencies are bundled locally.
+The contact address and repository links are configured in the source. No fake live demos or invented career milestones are included. Fonts use Fontshare with local fallbacks. No API keys or backend services are required.
 
 ## Design provenance
 
-Reworked from the user-provided Claude Design export `Prsenal portfolio.zip`, particularly `portfolio-orbit.html`. Preserves the orbit metaphor, geometric satellites, green accent, and dark atmosphere. Replaces sample projects, unverified career claims, and placeholder links with the owner’s actual GitHub projects. The original ZIP is left untouched.
-
-The 3D scene is procedural Three.js; no Blender or Higgsfield assets are required or represented as having been used.
+Reworked from the owner-supplied Claude Design export `Prsenal portfolio.zip`, particularly `portfolio-orbit.html`. The original archive is unchanged. The current artwork is procedural Three.js and CSS; no Blender or Higgsfield assets are represented as having been used.

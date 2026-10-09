@@ -1,4 +1,21 @@
-export const projects = [
+export interface Project {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  short: string;
+  platform: string;
+  status: string;
+  stack: string[];
+  repo: string;
+  color: string;
+  symbol: string;
+  shape: string;
+  radius: number;
+  angle: number;
+}
+
+export const projects: Project[] = [
   {
     id: "01",
     name: "Session Shelf",

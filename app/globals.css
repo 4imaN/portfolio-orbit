@@ -929,3 +929,478 @@ dialog > p {
     transition: none !important;
   }
 }
+/* Second edition — cinematic orbital exploration */
+.header {
+  height: 92px;
+}
+.hero {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  min-height: 730px;
+  height: calc(100svh - 92px);
+  padding: 0 4.5%;
+  overflow: hidden;
+}
+.hero-copy {
+  width: 46%;
+  padding-bottom: 100px;
+  transition:
+    opacity 0.6s,
+    filter 0.6s;
+}
+.hero.is-exploring .hero-copy {
+  opacity: 0.16;
+  filter: blur(3px);
+}
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 76% 42%, #92b85a0e, transparent 50%);
+}
+.universe {
+  right: 0;
+  top: 0;
+  width: 70%;
+  height: calc(100% - 120px);
+  background: none;
+}
+.hero-foot {
+  left: 4.5%;
+  right: 4.5%;
+  height: 56px;
+}
+.hero-copy h1 {
+  font-size: clamp(65px, 7.1vw, 116px);
+}
+.hero-coordinate {
+  margin-top: 32px;
+}
+.intro {
+  font-size: clamp(23px, 2.2vw, 33px);
+}
+.scene-top {
+  top: 28px;
+  left: 25%;
+}
+.scene-bottom {
+  bottom: 20px;
+  left: 33%;
+  right: 6.5%;
+}
+.scene-loading {
+  position: absolute;
+  bottom: 70px;
+  right: 8%;
+  font-size: 8px;
+  color: var(--muted);
+}
+.planet-label {
+  border: 0;
+  border-left: 1px solid #cefc7850;
+  border-radius: 0;
+  padding: 7px 11px;
+  background: #080b0970;
+  font-size: 11px;
+  letter-spacing: 0.015em;
+}
+.planet-label small {
+  color: #b6bdac;
+  font-size: 7px;
+  margin-bottom: 3px;
+}
+.planet-label::before {
+  background: #cefc7850;
+}
+.label-explore {
+  display: block;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  font-size: 7px;
+  color: var(--accent);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    opacity 0.3s,
+    max-height 0.3s,
+    margin 0.3s;
+}
+.planet-label:hover .label-explore,
+.planet-label:focus .label-explore,
+.planet-label.is-hot .label-explore {
+  max-height: 18px;
+  opacity: 1;
+  margin-top: 5px;
+}
+.planet-label.is-hot {
+  border-color: var(--accent);
+  background: #111a0dd9;
+}
+.planet-index {
+  position: absolute;
+  bottom: 76px;
+  left: 4.5%;
+  right: 4.5%;
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.planet-index button {
+  background: transparent;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+  padding: 18px 20px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #c4c9bd;
+  transition: color 0.2s;
+}
+.planet-index button .mono {
+  color: #626e59;
+  font-size: 8px;
+}
+.index-dot {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: var(--project-color);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--project-color) 25%, transparent);
+}
+.index-arrow {
+  margin-left: auto;
+  margin-right: 20px;
+  opacity: 0;
+  transform: translate(-8px, 4px);
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+}
+.planet-index button:hover,
+.planet-index button:focus-visible,
+.planet-index button[aria-pressed="true"] {
+  color: var(--project-color);
+}
+.planet-index button:hover .index-arrow,
+.planet-index button:focus-visible .index-arrow {
+  opacity: 1;
+  transform: none;
+}
+.project-name {
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  display: block;
+  margin-bottom: 8px;
+}
+.project-art,
+.dialog-planet {
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  background:
+    radial-gradient(circle at 28% 25%, #ffffff80, transparent 30%),
+    repeating-linear-gradient(
+      165deg,
+      transparent 0px,
+      #0002 4px,
+      transparent 8px
+    ),
+    radial-gradient(circle at 25% 25%, var(--project-color), #030704 90%);
+  box-shadow:
+    inset -8px -9px 15px #0009,
+    0 0 20px color-mix(in srgb, var(--project-color) 10%, transparent);
+  transition: transform 0.55s;
+}
+.project-art {
+  width: 54px;
+  height: 54px;
+  margin: 8px;
+}
+.project-row:hover .project-art {
+  transform: rotate(-15deg) scale(1.13);
+}
+.planet-art-02::after,
+.planet-art-04::after {
+  content: "";
+  position: absolute;
+  inset: 35% -35%;
+  border: 4px solid color-mix(in srgb, var(--project-color) 50%, transparent);
+  border-radius: 50%;
+  transform: rotate(-28deg);
+  box-shadow: 0 0 0 2px
+    color-mix(in srgb, var(--project-color) 20%, transparent);
+}
+.project-row:last-child {
+  border-bottom: 0;
+}
+.project-list {
+  border-bottom: 1px solid var(--line);
+}
+.about-mark > span {
+  animation: slow-turn 70s linear infinite;
+}
+.dialog-planet {
+  width: 115px;
+  height: 115px;
+  margin: 10px auto 35px;
+  animation: planet-levitate 6s ease-in-out infinite;
+}
+.dialog-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+dialog {
+  margin: auto 3vw auto auto;
+  width: min(500px, calc(100% - 32px));
+  background: #0d130ff5;
+  padding: 45px 36px;
+  border-radius: 6px;
+  border: 1px solid #d0fc7830;
+}
+dialog::backdrop {
+  background: #0005;
+  backdrop-filter: blur(2px);
+}
+.dialog-navigation {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  margin-top: 32px;
+  padding-top: 18px;
+}
+.dialog-navigation button {
+  background: none;
+  font-size: 11px;
+  color: var(--muted);
+  padding: 10px 0;
+}
+.dialog-navigation button:hover {
+  color: var(--accent);
+}
+.contact-arrow:hover {
+  transform: rotate(8deg) scale(1.05);
+}
+.hero-foot a span {
+  display: inline-block;
+  animation: scroll-cue 2.5s ease-in-out infinite;
+}
+.contact-bottom [role="status"] {
+  color: var(--accent);
+  font-size: 9px;
+}
+@keyframes slow-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes planet-levitate {
+  50% {
+    transform: translateY(-7px) rotate(4deg);
+  }
+}
+@keyframes scroll-cue {
+  50% {
+    transform: translateY(5px);
+  }
+}
+@media (min-width: 1600px) {
+  .hero {
+    max-width: none;
+    margin: 0;
+    padding-left: max(4.5%, calc((100vw - 1500px) / 2));
+  }
+  .hero-copy {
+    width: 45%;
+  }
+  .hero h1 {
+    font-size: 116px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 701px) {
+  .hero {
+    min-height: 700px;
+  }
+  .hero-copy {
+    width: 50%;
+  }
+  .hero-copy h1 {
+    font-size: 75px;
+  }
+  .scene-hint {
+    max-width: 180px;
+    line-height: 1.8;
+  }
+  .planet-index button {
+    font-size: 11px;
+    gap: 8px;
+  }
+}
+@media (max-width: 700px) {
+  .header {
+    height: 75px;
+  }
+  .hero {
+    height: auto;
+    min-height: 0;
+    padding: 36px 6% 0;
+  }
+  .hero-copy {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  .hero-copy h1 {
+    font-size: clamp(55px, 12vw, 80px);
+    margin-top: 20px;
+  }
+  .hero-copy .intro {
+    font-size: 21px;
+    margin-top: 18px;
+  }
+  .hero-description {
+    font-size: 11px;
+    margin-top: 12px;
+  }
+  .hero-copy .primary-link {
+    margin-top: 10px;
+    font-size: 12px;
+    padding: 10px 0;
+  }
+  .universe {
+    position: relative;
+    width: 100vw;
+    height: clamp(310px, 45svh, 410px);
+    margin: 0 0 0 -6vw;
+    right: auto;
+    top: auto;
+  }
+  .scene-top {
+    top: 18px;
+    left: 6%;
+    right: 6%;
+  }
+  .scene-bottom {
+    left: 6%;
+    right: 6%;
+    bottom: 10px;
+  }
+  .planet-label {
+    font-size: 9px;
+    padding: 5px 8px;
+  }
+  .planet-label small {
+    font-size: 6px;
+  }
+  .planet-index {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 15px;
+    margin-top: 10px;
+    padding-bottom: 20px;
+  }
+  .planet-index button {
+    font-size: 11px;
+    padding-top: 15px;
+    gap: 8px;
+  }
+  .index-arrow {
+    opacity: 1;
+    margin: 0 0 0 auto;
+    transform: none;
+    font-size: 10px;
+  }
+  .hero-foot {
+    position: relative;
+    left: auto;
+    right: auto;
+    height: 54px;
+    font-size: 6px;
+  }
+  .hero-foot > span {
+    max-width: 170px;
+  }
+  .hero-coordinate {
+    display: none;
+  }
+  .project-name {
+    font-size: 21px;
+  }
+  .project-art {
+    width: 39px;
+    height: 39px;
+    margin: 4px;
+  }
+  .dialog-planet {
+    width: 95px;
+    height: 95px;
+    margin-bottom: 25px;
+  }
+  dialog {
+    margin: auto;
+    padding: 32px 25px;
+    max-height: 88svh;
+  }
+  .scene-loading {
+    bottom: 60px;
+    right: 10%;
+    font-size: 7px;
+  }
+  .hero.is-exploring .hero-copy {
+    opacity: 0.55;
+    filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-mark > span,
+  .dialog-planet,
+  .hero-foot a span {
+    animation: none;
+  }
+  .hero-copy {
+    transition: none;
+  }
+}
+
+@media (min-width: 701px) {
+  #orbit-canvas {
+    mask-image: linear-gradient(to right, transparent, black 12%);
+  }
+}
+
+.hero-copy {
+  animation: hero-rise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+dialog[open] {
+  animation: panel-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes hero-rise {
+  from {
+    translate: 0 22px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes panel-enter {
+  from {
+    translate: 25px 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy,
+  dialog[open] {
+    animation: none;
+  }
+}
