@@ -173,11 +173,33 @@ export default function Portfolio() {
               <span>THE PROJECT SYSTEM</span>
               <span>EST. 2026 / VOL. 02</span>
             </div>
+            <div className="camera-tools" aria-label="Camera controls">
+              <div role="group" aria-label="Viewing axis">
+                <button data-view="top" aria-label="Top view, Y axis">
+                  TOP
+                </button>
+                <button data-view="front" aria-label="Front view, Z axis">
+                  FRONT
+                </button>
+                <button data-view="side" aria-label="Side view, X axis">
+                  SIDE
+                </button>
+              </div>
+              <div role="group" aria-label="Zoom">
+                <button data-zoom="in" aria-label="Zoom in">
+                  +
+                </button>
+                <button data-zoom="out" aria-label="Zoom out">
+                  −
+                </button>
+              </div>
+              <span>RIGHT-DRAG TO PAN · PINCH TO ZOOM</span>
+            </div>
             <div className="scene-bottom">
               <span className="mono scene-hint">
                 {focus
                   ? "APPROACHING YOUR NEXT DISCOVERY"
-                  : "DRAG TO ORBIT · CLICK A WORLD"}
+                  : "DRAG TO ORBIT · SCROLL TO ZOOM"}
               </span>
               <button
                 id="motion-toggle"

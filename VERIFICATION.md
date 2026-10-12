@@ -20,3 +20,12 @@ Checked on 2026-10-09 against the Next.js 16.4 production build.
 Rendering resources, DOM labels, observers, and event listeners have explicit disposal on React unmount. Continuous rendering suspends offscreen and in hidden tabs; initial and resize draws still produce a usable static frame.
 
 Physical-device performance, automated accessibility audits, and screen-reader behavior have not been tested. External fonts use local fallbacks. The 3D code is loaded separately; no generated video assets or external media services are needed.
+
+## Space events and free camera — 2026-10-12
+
+- `npm test`: two tests pass, covering the complete approach/refuel/departure/wait cycle, zero-time pause behavior, comet flybys, and geometry reuse across repeated events.
+- Production build and strict TypeScript checks pass.
+- Observed the visiting saucer in the live desktop scene; exercised Top view, Zoom in, and Reset.
+- Exercised Side view and Zoom out at 390 × 844. All three axis presets and both zoom buttons are present, with no horizontal overflow.
+- Reduced motion starts paused. Browser reports no page errors during these checks.
+- Controls now support wheel/pinch zoom, full polar rotation, and right-drag panning. Physical-device multitouch gestures remain untested.

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { createSpaceEvents } from "./space-events";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import type { Project } from "./projects";
 interface OrbitState {
@@ -85,19 +86,27 @@ export function createOrbit(
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.3;
   const scene = new THREE.Scene();
+  const spaceEvents = createSpaceEvents(scene);
+  const eventStatus = document.createElement("span");
+  eventStatus.className = "space-event mono";
+  eventStatus.setAttribute("aria-hidden", "true");
+  host.appendChild(eventStatus);
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 150);
   const home = new THREE.Vector3(0, 17, 26);
   camera.position.copy(home);
   const controls = new OrbitControls(camera, canvas);
-  controls.enableZoom = false;
-  controls.enablePan = false;
+  controls.enableZoom = true;
+  controls.minDistance = 5;
+  controls.maxDistance = 55;
+  controls.zoomSpeed = 0.7;
+  controls.enablePan = true;
   controls.enableDamping = true;
   controls.dampingFactor = 0.06;
   controls.rotateSpeed = 0.45;
-  controls.minPolarAngle = 0.35;
-  controls.maxPolarAngle = 1.45;
+  controls.minPolarAngle = 0.025;
+  controls.maxPolarAngle = Math.PI - 0.025;
   controls.touches.ONE = undefined;
-  controls.touches.TWO = THREE.TOUCH.ROTATE;
+  controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
   canvas.style.touchAction = "pan-y";
   const light = new THREE.DirectionalLight("#f4ffd9", 3.5);
   light.position.set(-9, 12, 10);
@@ -377,7 +386,9 @@ export function createOrbit(
     "pointerup",
     (e) => {
       const click =
-        down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6;
+        e.button === 0 &&
+        down &&
+        Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6;
       down = null;
       if (click) {
         const p = hit(e);
@@ -397,6 +408,53 @@ export function createOrbit(
     savedTarget = new THREE.Vector3(),
     projected = new THREE.Vector3(),
     destination = new THREE.Vector3();
+  const viewPositions: Record<string, THREE.Vector3> = {
+    top: new THREE.Vector3(0, 30, 0.1),
+    front: new THREE.Vector3(0, 0.1, 30),
+    side: new THREE.Vector3(30, 0.1, 0),
+  };
+  host.querySelectorAll<HTMLButtonElement>("[data-view]").forEach((button) =>
+    button.addEventListener(
+      "click",
+      () => {
+        if (state.focusedId) return;
+        savedPosition.copy(viewPositions[button.dataset.view!]);
+        savedTarget.set(0, 0, 0);
+        returning = true;
+        if (state.reduced) {
+          camera.position.copy(savedPosition);
+          controls.target.copy(savedTarget);
+          returning = false;
+        }
+        controls.update();
+        cancelAnimationFrame(frame);
+        frame = 0;
+        draw(performance.now(), true);
+      },
+      eventOptions,
+    ),
+  );
+  host.querySelectorAll<HTMLButtonElement>("[data-zoom]").forEach((button) =>
+    button.addEventListener(
+      "click",
+      () => {
+        if (state.focusedId) return;
+        returning = false;
+        const offset = camera.position.clone().sub(controls.target);
+        const distance = THREE.MathUtils.clamp(
+          offset.length() * (button.dataset.zoom === "in" ? 0.8 : 1.25),
+          5,
+          55,
+        );
+        camera.position.copy(controls.target).add(offset.setLength(distance));
+        controls.update();
+        cancelAnimationFrame(frame);
+        frame = 0;
+        draw(performance.now(), true);
+      },
+      eventOptions,
+    ),
+  );
   let hasDrawn = false;
   function schedule() {
     if (!frame && !disposed && visible && inView) {
@@ -412,6 +470,7 @@ export function createOrbit(
     const moving = !state.paused && !state.focusedId;
     if (moving) {
       elapsed += dt;
+      eventStatus.textContent = spaceEvents.tick(dt);
       coreMesh.rotation.y += dt * 0.12;
       arcs.forEach((arc, i) => (arc.rotation.z += dt * (0.09 + i * 0.025)));
       glow.scale.setScalar(10.5 + Math.sin(elapsed * 0.65) * 0.3);
@@ -553,6 +612,7 @@ export function createOrbit(
       observer.disconnect();
       controls.dispose();
       labels.replaceChildren();
+      eventStatus.remove();
       scene.traverse((object) => {
         const renderable = object as THREE.Mesh;
         if (renderable.geometry) renderable.geometry.dispose();

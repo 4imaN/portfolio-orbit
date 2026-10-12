@@ -1,0 +1,44 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import * as THREE from "three";
+import { createSpaceEvents } from "../lib/space-events";
+
+test("visitor approaches, refuels at the sun, departs, and waits before returning", () => {
+  const scene = new THREE.Scene();
+  const events = createSpaceEvents(scene, () => 0);
+  const ship = scene.getObjectByName("visitor-ship")!;
+  assert.equal(events.phase, "idle");
+  assert.equal(ship.visible, false);
+  events.tick(7);
+  assert.equal(events.phase, "approach");
+  assert.equal(ship.visible, true);
+  assert.equal(events.tick(6), "VISITOR REFUELING AT THE SUN");
+  assert.equal(events.phase, "refuel");
+  const dock = ship.position.clone();
+  events.tick(0);
+  assert.deepEqual(ship.position, dock);
+  events.tick(4);
+  assert.equal(events.phase, "departure");
+  events.tick(5);
+  assert.equal(events.phase, "idle");
+  assert.equal(ship.visible, false);
+  events.tick(21);
+  assert.equal(events.phase, "idle");
+  events.tick(1);
+  assert.equal(events.phase, "approach");
+});
+test("comets appear briefly and reuse their geometry across repeat visits", () => {
+  const scene = new THREE.Scene();
+  const events = createSpaceEvents(scene, () => 0);
+  const comet = scene.getObjectByName("passing-comet")!;
+  const count = scene.children.length;
+  events.tick(3);
+  assert.equal(comet.visible, true);
+  const start = comet.position.clone();
+  events.tick(1);
+  assert.notDeepEqual(comet.position, start);
+  events.tick(2);
+  assert.equal(comet.visible, false);
+  for (let i = 0; i < 500; i++) events.tick(0.1);
+  assert.equal(scene.children.length, count);
+});

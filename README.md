@@ -16,6 +16,7 @@ npm run dev
 Open http://127.0.0.1:4174. The original `/portfolio-orbit.html` URL also works.
 
 ```sh
+npm test
 npm run typecheck
 npm run build
 npm start
@@ -29,6 +30,8 @@ npm start
 - `components/Portfolio.tsx`: page content, transitions, and accessible native project dialogs.
 - `components/Orbit.tsx`: lazy-loaded React wrapper and scene lifecycle.
 - `lib/orbit-engine.ts`: typed Three.js scene, procedural planet textures, atmosphere shaders, camera travel, hover feedback, and rendering lifecycle.
+- `lib/space-events.ts`: randomized comet and ship timelines, reusable geometry, and solar-refueling animation.
+- `tests/space-events.test.ts`: visitor lifecycle and comet reuse checks.
 - `lib/projects.ts`: project content, colors, repository links, and orbit settings.
 
 ## Motion and interaction
@@ -37,7 +40,10 @@ npm start
 - Textured, rotating planets with atmosphere rims and orbital trails.
 - Hover/focus highlights; orbit selection approaches the chosen world.
 - Detail navigation switches projects; Escape closes and returns to the previous camera view.
-- Pause and reset controls, native mobile page scrolling, two-finger scene rotation.
+- Scroll-wheel and pinch zoom, full vertical/horizontal orbit rotation, and right-drag panning.
+- Top (Y), Front (Z), and Side (X) camera presets, plus zoom buttons and reset.
+- One-finger mobile page scrolling; two-finger scene rotation and pinch zoom.
+- Random comet flybys and an alien saucer that approaches the sun, refuels with an energy beam, and departs. Pausing the scene freezes their timelines.
 - Reduced motion bypasses camera interpolation and disables automatic orbit motion.
 - Rendering pauses offscreen and in hidden tabs. All resources, observers, and listeners are disposed on unmount.
 

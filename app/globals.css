@@ -1404,3 +1404,75 @@ dialog[open] {
     animation: none;
   }
 }
+
+.camera-tools {
+  position: absolute;
+  right: 6.5%;
+  bottom: 70px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 2;
+}
+.camera-tools > div {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #0a100de0;
+}
+.camera-tools button {
+  background: none;
+  font-family: monospace;
+  font-size: 9px;
+  padding: 9px 11px;
+  color: #bac5b0;
+  min-height: 32px;
+}
+.camera-tools button:hover,
+.camera-tools button:focus-visible {
+  background: #cefc7818;
+  color: var(--accent);
+}
+.camera-tools > span {
+  font-family: monospace;
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.space-event {
+  position: absolute;
+  top: 55px;
+  right: 6.5%;
+  font-size: 8px;
+  color: #b8e6c4;
+  pointer-events: none;
+}
+.space-event:empty {
+  display: none;
+}
+.is-exploring .camera-tools {
+  visibility: hidden;
+}
+@media (max-width: 1000px) {
+  .camera-tools > span {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .camera-tools {
+    right: 6%;
+    bottom: 52px;
+    gap: 8px;
+  }
+  .camera-tools button {
+    padding: 8px 10px;
+  }
+  .space-event {
+    top: 40px;
+    font-size: 7px;
+  }
+  .scene-bottom .scene-hint {
+    font-size: 6px;
+  }
+}
