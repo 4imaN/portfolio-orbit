@@ -52,3 +52,15 @@ The contact address and repository links are configured in the source. No fake l
 ## Design provenance
 
 Reworked from the owner-supplied Claude Design export `Prsenal portfolio.zip`, particularly `portfolio-orbit.html`. The original archive is unchanged. The current artwork is procedural Three.js and CSS; no Blender or Higgsfield assets are represented as having been used.
+
+## Planet sizes
+
+Planet area is proportional to each project's tracked, nonblank source-line count: TI Oracle 8,304; Session Shelf 5,838; Gaz 2,367; WC26 1,844. Radius uses the square root of the count relative to the largest project. Project previews use the same proportions and detail panels show the counts.
+
+`lib/source-lines.json` is a local snapshot, not a live GitHub counter. Counts include comments, tests, and source configuration; dependency folders, generated output, model/data artifacts, and generated Next.js declarations are excluded. Refresh from the original local repositories with:
+
+```sh
+python3 scripts/update-source-lines.py
+```
+
+Pass a Desktop directory as an optional argument if those repositories live elsewhere. Rebuild after refreshing.

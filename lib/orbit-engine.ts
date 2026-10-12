@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { createSpaceEvents } from "./space-events";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import type { Project } from "./projects";
+import { planetRadius, type Project } from "./projects";
 interface OrbitState {
   focusedId: string | null;
   hoveredId: string | null;
@@ -220,7 +220,7 @@ export function createOrbit(
       ),
     );
     const map = planetTexture(project.color, i);
-    const size = [0.7, 0.84, 0.68, 0.78][i];
+    const size = planetRadius(project);
     const material = new THREE.MeshStandardMaterial({
       map,
       color: "#ffffff",

@@ -8,7 +8,12 @@ import {
 } from "react";
 import { motion, useReducedMotion, MotionConfig } from "motion/react";
 import dynamic from "next/dynamic";
-import { projects, type Project } from "@/lib/projects";
+import {
+  projects,
+  codeLines,
+  planetRadius,
+  type Project,
+} from "@/lib/projects";
 const Orbit = dynamic(() => import("./Orbit"), {
   ssr: false,
   loading: () => (
@@ -273,7 +278,7 @@ export default function Portfolio() {
               <p>
                 Different worlds. The same curiosity.
                 <br />
-                Explore the systems behind the satellites.
+                Planet sizes reflect their source-code line counts.
               </p>
             </div>
           </Reveal>
@@ -289,6 +294,7 @@ export default function Portfolio() {
                   <span className="project-number">{p.id}</span>
                   <span
                     className={`project-art planet-art-${p.id}`}
+                    style={{ scale: planetRadius(p) / 1.1 }}
                     aria-hidden="true"
                   />
                   <span>
@@ -452,7 +458,13 @@ export default function Portfolio() {
           >
             <div
               className={`dialog-planet planet-art-${selected.id}`}
-              style={{ "--project-color": selected.color } as CSSProperties}
+              style={
+                {
+                  "--project-color": selected.color,
+                  width: (115 * planetRadius(selected)) / 1.1,
+                  height: (115 * planetRadius(selected)) / 1.1,
+                } as CSSProperties
+              }
               aria-hidden="true"
             />
             <span className="eyebrow">
@@ -460,6 +472,10 @@ export default function Portfolio() {
             </span>
             <h2 id="dialog-title">{selected.name}</h2>
             <p className="dialog-body">{selected.description}</p>
+            <p className="source-line-note mono">
+              {codeLines(selected).toLocaleString("en-US")} nonblank source
+              lines · planet area reflects code size
+            </p>
             <div className="dialog-facts">
               <div>
                 <span className="mono">PLATFORM</span>

@@ -1,3 +1,4 @@
+import sourceLines from "./source-lines.json";
 export interface Project {
   id: string;
   name: string;
@@ -85,3 +86,12 @@ export const projects: Project[] = [
     angle: 0.55,
   },
 ];
+
+export function codeLines(project: Project): number {
+  return sourceLines.counts[project.repo as keyof typeof sourceLines.counts];
+}
+/** Projected planet area is proportional to measured source lines. */
+export function planetRadius(project: Project): number {
+  const largest = Math.max(...Object.values(sourceLines.counts));
+  return 1.1 * Math.sqrt(codeLines(project) / largest);
+}

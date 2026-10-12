@@ -29,3 +29,10 @@ Physical-device performance, automated accessibility audits, and screen-reader b
 - Exercised Side view and Zoom out at 390 × 844. All three axis presets and both zoom buttons are present, with no horizontal overflow.
 - Reduced motion starts paused. Browser reports no page errors during these checks.
 - Controls now support wheel/pinch zoom, full polar rotation, and right-drag panning. Physical-device multitouch gestures remain untested.
+
+## Source-based planet sizes — 2026-10-12
+
+- Measured tracked nonblank source lines in all four local repositories: TI Oracle 8,304; Session Shelf 5,838; Gaz 2,367; WC26 1,844.
+- Production build, including TypeScript validation, passes.
+- Reviewed the running scene at 1440 × 1000: planets show distinct sizes, with TI Oracle largest and WC26 smallest.
+- Opened WC26 and verified its detail panel displays 1,844 nonblank source lines. No browser page errors observed.
